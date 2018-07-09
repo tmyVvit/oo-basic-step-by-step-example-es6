@@ -9,7 +9,11 @@ class Class {
     }
 
     assignLeader(student) {
-        Class.prototype.leader = student;
+        if(this.equal(student.classN))
+            Class.prototype.leader = student;
+    }
+    equal(classN){
+        return classN.number === this.number;
     }
 }
 
