@@ -1,15 +1,14 @@
 "use strict";
-import _ from "lodash";
-import chai from "chai";
-import sinon from "sinon";
-import sinonChai from "sinon-chai";
+const chai = require("chai");
+const sinon = require("sinon");
+const sinonChai = require("sinon-chai");
 const expect = chai.expect;
 chai.use(sinonChai);
 
-import Person from "../../src/practice_11/person.js";
-import Student from "../../src/practice_11/student.js";
-import Teacher from "../../src/practice_11/teacher.js";
-import Class from "../../src/practice_11/class.js";
+const {Person} = require("../../src/practice_11/person.js");
+const {Student} = require("../../src/practice_11/student.js");
+const {Teacher} = require("../../src/practice_11/teacher.js");
+const {Class} = require("../../src/practice_11/class.js");
 
 describe("#11 Person", () => {
     it("should have field name and age", () => {
@@ -24,33 +23,33 @@ describe("#11 Person", () => {
         expect(introduce).to.equal("My name is Tom. I am 21 years old.");
     });
 
-    describe("Student", () => {
-        let klass;
+    describe("#11.1 Student", () => {
+        let classN;
 
         before(() => {
-            klass = new Class(2);
+            classN = new Class(2);
         });
 
         it("should have field name, age and class number", () => {
-            const student = new Student(1, "Tom", 21, klass);
+            const student = new Student(1, "Tom", 21, classN);
             expect(student.name).to.equal("Tom");
             expect(student.age).to.equal(21);
-            expect(student.klass).to.equal(klass);
+            expect(student.classN).to.equal(classN);
         });
 
-        describe("#introduce", () => {
+        describe("#11.1.1 introduce", () => {
             it("should overwrite Person introduce, introduce with name, age and class number", () => {
-                const student = new Student(1, "Tom", 21, klass);
+                const student = new Student(1, "Tom", 21, classN);
                 const introduce = student.introduce();
 
                 expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Student. I am at Class 2.");
             });
 
             it("should print Leader role, given student is leader", () => {
-                const klass = new Class(2);
-                const student = new Student(1, "Tom", 21, klass);
+                const classN = new Class(2);
+                const student = new Student(1, "Tom", 21, classN);
 
-                klass.assignLeader(student);
+                classN.assignLeader(student);
                 const introduce = student.introduce();
 
                 expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Student. I am Leader of Class 2.");
@@ -58,25 +57,27 @@ describe("#11 Person", () => {
         });
     });
 
-    describe("Teacher", () => {
-        let klasses;
+    describe("#11.2 Teacher", () => {
+        let classNes;
+        let classN;
 
         before(() => {
-            klasses = [new Class(2), new Class(3)];
+            classN = new Class(2);
+            classNes = [classN, new Class(3)];
         });
 
         it("should have field name, age and class number", () => {
-            const teacher = new Teacher(1, "Tom", 21, klasses);
+            const teacher = new Teacher(1, "Tom", 21, classNes);
             expect(teacher.name).to.equal("Tom");
             expect(teacher.age).to.equal(21);
-            expect(teacher.klasses.length).to.equal(klasses.length);
-            expect(teacher.klasses[0]).to.equal(klasses[0]);
-            expect(teacher.klasses[1]).to.equal(klasses[1]);
+            expect(teacher.classes.length).to.equal(classNes.length);
+            expect(teacher.classes[0]).to.equal(classNes[0]);
+            expect(teacher.classes[1]).to.equal(classNes[1]);
         });
 
-        describe("#introduce", () => {
+        describe("#11.2.1 introduce", () => {
             it("should overwrite Person introduce, introduce with name, age and class number, given teacher have class", () => {
-                const teacher = new Teacher(1, "Tom", 21, klasses);
+                const teacher = new Teacher(1, "Tom", 21, classNes);
                 const introduce = teacher.introduce();
                 expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Teacher. I teach Class 2, 3.");
             });
@@ -87,102 +88,118 @@ describe("#11 Person", () => {
                 expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Teacher. I teach No Class.");
             });
         });
+
+        describe("#11.2.2 introduceWith", () => {
+            let studentJerry;
+            before(() => {
+                studentJerry = new Student(1, "Jerry", 8, classN);
+            });
+
+            it("should return I am teaching some guy, given my class is same with this guy's class", () => {
+                const teacher = new Teacher(1, "Tom", 21, classNes);
+                const introduce = teacher.introduceWith(studentJerry);
+                expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Teacher. I teach Jerry.");
+            });
+
+            it("should return I am teaching some guy, given my class is different with this guy's class", () => {
+                const teacher = new Teacher(1, "Tom", 21, [new Class(10)]);
+                const introduce = teacher.introduceWith(studentJerry);
+                expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Teacher. I don't teach Jerry.");
+            });
+        });
     });
 });
 
-describe("Class", () => {
-    let sandbox;
-    let spy;
-
-    beforeEach(()=>{
-        sandbox = sinon.sandbox.create();
-        spy = sandbox.stub(console, 'log');
+describe("#11 Class", () => {
+    before(() => {
+        sinon.spy(console, 'log');
     });
 
-    afterEach(() => {
-      sandbox.restore();
+    after(() => {
+        console.log.restore();
     });
 
     it("should have class number", () => {
-        const klass = new Class(2);
-        expect(klass.number).to.equal(2);
+        const classN = new Class(2);
+        expect(classN.number).to.equal(2);
     });
 
     it("should get display name with number", () => {
-        const klass = new Class(2);
-        expect(klass.getDisplayName()).to.equal("Class 2");
+        const classN = new Class(2);
+        expect(classN.getDisplayName()).to.equal("Class 2");
     });
 
-    describe("#assignLeader", () => {
+    describe("#11.3 assignLeader", () => {
         it("should assign student as Leader, given student is class member", () => {
-            const klass = new Class(2);
-            const student = new Student(1, "Jerry", 21, klass);
+            const classN = new Class(2);
+            const student = new Student(1, "Jerry", 21, classN);
 
-            klass.assignLeader(student);
+            classN.assignLeader(student);
 
-            expect(klass.leader).to.equal(student);
+            expect(classN.leader).to.equal(student);
          });
 
         it("should not assign student as Leader, given student is not class member", () => {
-            const klass = new Class(2);
-            const otherKlass = new Class(3);
-            const student = new Student(1, "Jerry", 21, otherKlass);
+            const classN = new Class(2);
+            const otherclassN = new Class(3);
+            const student = new Student(1, "Jerry", 21, otherclassN);
 
-            klass.assignLeader(student);
+            classN.assignLeader(student);
 
-            expect(klass.leader).not.equal(student);
+            expect(classN.leader).not.equal(student);
         });
 
         it("should not assign student as Leader, given student is not class member", () => {
-            const klass = new Class(2);
-            const otherKlass = new Class(3);
-            const student = new Student(1, "Jerry", 21, otherKlass);
+            const classN = new Class(2);
+            const otherclassN = new Class(3);
+            const student = new Student(1, "Jerry", 21, otherclassN);
 
-            klass.assignLeader(student);
+            classN.assignLeader(student);
 
-            expect(klass.leader).not.equal(student);
+            expect(classN.leader).not.equal(student);
             //expect(console.log.getCall(0).args[0]).to.equal("It is not one of us."); //assert style 2.
-            expect(spy.calledWith("It is not one of us.")).to.be.ok;
+            expect(console.log).to.be.calledWith("It is not one of us.");
         });
 
         it("should notify assign leader listeners", () => {
-            const klass = new Class(2);
-            const otherKlass = new Class(3);
-            const student = new Student(1, "Jerry", 21, klass);
-            const teacher = new Teacher(1, "Tom", 21, [klass, otherKlass]);
-            klass.registerAssignLeaderListener(teacher);
+            const classN = new Class(2);
+            const otherclassN = new Class(3);
+            const student = new Student(1, "Jerry", 21, classN);
+            const teacher = new Teacher(1, "Tom", 21, [classN, otherclassN]);
+            classN.registerAssignLeaderListener(teacher);
 
-            klass.assignLeader(student);
+            classN.assignLeader(student);
+            expect(console.log).to.be.calledWith("I am Tom. I know Jerry become Leader of Class 2.");
 
-            expect(spy.calledWith("I am Tom. I know Jerry become Leader of Class 2.")).to.be.ok;
         });
     });
 
-    describe("#appendMemeber", () => {
-        it("should change student's klass attribute", () => {
-            const klass = new Class(2);
-            const otherKlass = new Class(3);
+    describe("#11.4 appendMemeber", () => {
+        it("should change student's classN attribute", () => {
+            const classN = new Class(2);
+            const otherclassN = new Class(3);
 
-            const student = new Student(1, "Jerry", 21, otherKlass);
+            const student = new Student(1, "Jerry", 21, otherclassN);
 
-            expect(student.klass).to.equal(otherKlass);
+            expect(student.classN).to.equal(otherclassN);
 
-            klass.appendMember(student);
+            classN.appendMember(student);
 
-            expect(student.klass).to.equal(klass);
+            expect(student.classN).to.equal(classN);
         });
 
         it("should notify join listeners", () => {
-            const klass = new Class(2);
-            const otherKlass = new Class(3);
-            const teacher = new Teacher(1, "Tom", 21, [klass, otherKlass]);
+            const classN = new Class(2);
+            const otherclassN = new Class(3);
+            const teacher = new Teacher(1, "Tom", 21, [classN, otherclassN]);
 
-            const student = new Student(1, "Jerry", 21, otherKlass);
-            klass.registerJoinListener(teacher);
+            const student = new Student(1, "Jerry", 21, otherclassN);
+            classN.registerJoinListener(teacher);
 
-            klass.appendMember(student);
+            classN.appendMember(student);
 
-            expect(spy.calledWith("I am Tom. I know Jerry has joined Class 2.")).to.be.ok;
+            expect(console.log).to.be.calledWith("I am Tom. I know Jerry has joined Class 2.");
+
         });
     });
 });
