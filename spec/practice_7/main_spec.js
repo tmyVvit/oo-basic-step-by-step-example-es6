@@ -93,7 +93,7 @@ describe("#7 Person", () => {
     });
 });
 
-describe("Class", () => {
+describe("#7  Class", () => {
     it("should have class number", () => {
         const classN = new Class(2);
         expect(classN.number).to.equal(2);

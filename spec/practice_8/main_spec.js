@@ -6,10 +6,10 @@ import sinonChai from "sinon-chai";
 const expect = chai.expect;
 chai.use(sinonChai);
 
-import Person from "../../src/practice_8/person.js";
-import Student from "../../src/practice_8/student.js";
-import Teacher from "../../src/practice_8/teacher.js";
-import Class from "../../src/practice_8/class.js";
+import {Person} from "../../src/practice_8/person.js";
+import {Student} from "../../src/practice_8/student.js";
+import {Teacher} from "../../src/practice_8/teacher.js";
+import {Class} from "../../src/practice_8/class.js";
 
 describe("#8 Person", () => {
     it("should have field name and age", () => {
@@ -24,7 +24,7 @@ describe("#8 Person", () => {
         expect(introduce).to.equal("My name is Tom. I am 21 years old.");
     });
 
-    describe("Student", () => {
+    describe("#8.1 Student", () => {
         let classN;
 
         before(() => {
@@ -38,7 +38,7 @@ describe("#8 Person", () => {
             expect(student.classN).to.equal(classN);
         });
 
-        describe("#introduce", () => {
+        describe("#8.1.1 introduce", () => {
             it("should overwrite Person introduce, introduce with name, age and class number", () => {
                 const student = new Student(1, "Tom", 21, classN);
                 const introduce = student.introduce();
@@ -57,7 +57,7 @@ describe("#8 Person", () => {
         });
     });
 
-    describe("Teacher", () => {
+    describe("#8.2 Teacher", () => {
         let classN;
 
         before(() => {
@@ -71,7 +71,7 @@ describe("#8 Person", () => {
             expect(teacher.classN).to.equal(classN);
         });
 
-        describe("#introduce", () => {
+        describe("#8.2.1 introduce", () => {
             it("should overwrite Person introduce, introduce with name, age and class number, given teacher have class", () => {
                 const teacher = new Teacher(1, "Tom", 21, classN);
                 const introduce = teacher.introduce();
@@ -87,7 +87,7 @@ describe("#8 Person", () => {
     });
 });
 
-describe("Class", () => {
+describe("#8 Class", () => {
     it("should have class number", () => {
         const classN = new Class(2);
         expect(classN.number).to.equal(2);
@@ -98,7 +98,7 @@ describe("Class", () => {
         expect(classN.getDisplayName()).to.equal("Class 2");
     });
 
-    describe("#assignLeader", () => {
+    describe("#8.1 assignLeader", () => {
         it("should assign student as Leader, given student is class member", () => {
             const classN = new Class(2);
             const student = new Student(1, "Jerry", 21, classN);
