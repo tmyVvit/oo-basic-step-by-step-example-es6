@@ -22,7 +22,7 @@ describe("#7 Person", () => {
         expect(introduce).to.equal("My name is Tom. I am 21 years old.");
     });
 
-    describe("Student", () => {
+    describe("#7.1 Student", () => {
         let classN;
 
         before(() => {
@@ -43,7 +43,7 @@ describe("#7 Person", () => {
         });
     });
 
-    describe("Teacher", () => {
+    describe("#7.2 Teacher", () => {
         let classN;
 
         before(() => {
@@ -57,7 +57,7 @@ describe("#7 Person", () => {
             expect(teacher.classN).to.equal(classN);
         });
 
-        describe("#introduce", () => {
+        describe("#7.2.1 introduce", () => {
             it("should overwrite Person introduce, introduce with name, age and class number, given teacher have class", () => {
                 const teacher = new Teacher("Tom", 21, classN);
                 const introduce = teacher.introduce();
@@ -71,7 +71,7 @@ describe("#7 Person", () => {
             });
         });
 
-        describe("#introduceWith", () => {
+        describe("#7.2.2 introduceWith", () => {
             let studentJerry;
 
             before(() => {

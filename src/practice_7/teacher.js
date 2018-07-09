@@ -9,13 +9,15 @@ class Teacher extends Person {
 
     introduce(){
         if(this.classN!==null && this.classN !== undefined)
-            return super.introduce()+` I am a Teacher. I teach Class ${this.classN.number}.`;
+            return super.introduce()+` I am a Teacher. I teach `+`${this.classN.getDisplayName()}`+'.';
         else return super.introduce()+` I am a Teacher. I teach No Class.`;
     }
 
     introduceWith(student) {
-        if(student.classN.number === this.classN.number)
-            return super.introduce()+` I am a Teacher. I `+(student.classN.number === this.classN.number)?'':'don\'t'+`teach ${student.name}.`;
+        let tmp = '';
+        if(student.classN.number !== this.classN.number)
+            tmp = "don't ";
+        return super.introduce()+` I am a Teacher. I `+tmp+`teach ${student.name}.`;
     }
 }
 

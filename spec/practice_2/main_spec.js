@@ -20,7 +20,7 @@ describe("#2 Person", () => {
         expect(introduce).to.equal("My name is Tom. I am 21 years old.");
     });
 
-    describe("Student", () => {
+    describe("#2.1 Student", () => {
         it("should have field name, age and class number", () => {
             const student = new Student("Tom", 21, 2);
             expect(student.name).to.equal("Tom");
