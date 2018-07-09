@@ -4,9 +4,9 @@ import sinonChai from "sinon-chai";
 const expect = chai.expect;
 chai.use(sinonChai);
 
-import Person from "../../src/practice_1/person.js";
+import {Person} from "../../src/practice_1/person.js";
 
-describe("Person", () => {
+describe("#1 Person", () => {
     it("should have field name and age", () => {
         const person = new Person("Tom", 21);
         expect(person.name).to.equal("Tom");

@@ -4,12 +4,12 @@ import sinonChai from "sinon-chai";
 const expect = chai.expect;
 chai.use(sinonChai);
 
-import Person from "../../src/practice_6/person.js";
-import Student from "../../src/practice_6/student.js";
-import Teacher from "../../src/practice_6/teacher.js";
+import {Person} from "../../src/practice_6/person.js";
+import {Student} from "../../src/practice_6/student.js";
+import {Teacher} from "../../src/practice_6/teacher.js";
 
 
-describe("Person", () => {
+describe("#6 Person", () => {
     it("should have field name and age", () => {
         const person = new Person("Tom", 21);
         expect(person.name).to.equal("Tom");
@@ -27,7 +27,7 @@ describe("Person", () => {
             const student = new Student("Tom", 21, 2);
             expect(student.name).to.equal("Tom");
             expect(student.age).to.equal(21);
-            expect(student.klass).to.equal(2);
+            expect(student.classN).to.equal(2);
         });
 
         it("should overwrite Person introduce, introduce with name, age and class number", () => {
@@ -42,7 +42,7 @@ describe("Person", () => {
            const teacher = new Teacher("Tom", 21, 2);
            expect(teacher.name).to.equal("Tom");
            expect(teacher.age).to.equal(21);
-           expect(teacher.klass).to.equal(2);
+           expect(teacher.classN).to.equal(2);
        });
 
        it("should overwrite Person introduce, introduce with name, age and class number, given teacher have class", () => {

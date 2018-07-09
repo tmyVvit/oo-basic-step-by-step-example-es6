@@ -11,7 +11,7 @@ import Student from "../../src/practice_10/student.js";
 import Teacher from "../../src/practice_10/teacher.js";
 import Class from "../../src/practice_10/class.js";
 
-describe("Person", () => {
+describe("#10 Person", () => {
     it("should have field name and age", () => {
         const person = new Person(1, "Tom", 21);
         expect(person.name).to.equal("Tom");

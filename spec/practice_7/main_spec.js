@@ -4,12 +4,12 @@ import sinonChai from "sinon-chai";
 const expect = chai.expect;
 chai.use(sinonChai);
 
-import Person from "../../src/practice_7/person.js";
-import Student from "../../src/practice_7/student.js";
-import Teacher from "../../src/practice_7/teacher.js";
-import Class from "../../src/practice_7/class.js";
+import {Person} from "../../src/practice_7/person.js";
+import {Student} from "../../src/practice_7/student.js";
+import {Teacher} from "../../src/practice_7/teacher.js";
+import {Class} from "../../src/practice_7/class.js";
 
-describe("Person", () => {
+describe("#7 Person", () => {
     it("should have field name and age", () => {
         const person = new Person("Tom", 21);
         expect(person.name).to.equal("Tom");
@@ -23,43 +23,43 @@ describe("Person", () => {
     });
 
     describe("Student", () => {
-        let klass;
+        let classN;
 
         before(() => {
-           klass = new Class(2); 
+           classN = new Class(2); 
         });
 
         it("should have field name, age and class number", () => {
-            const student = new Student("Tom", 21, klass);
+            const student = new Student("Tom", 21, classN);
             expect(student.name).to.equal("Tom");
             expect(student.age).to.equal(21);
-            expect(student.klass).to.equal(klass);
+            expect(student.classN).to.equal(classN);
         });
 
         it("should overwrite Person introduce, introduce with name, age and class number", () => {
-            const student = new Student("Tom", 21, klass);
+            const student = new Student("Tom", 21, classN);
             const introduce = student.introduce();
             expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Student. I am at Class 2.");
         });
     });
 
     describe("Teacher", () => {
-        let klass;
+        let classN;
 
         before(() => {
-            klass = new Class(2);
+            classN = new Class(2);
         });
 
         it("should have field name, age and class number", () => {
-            const teacher = new Teacher("Tom", 21, klass);
+            const teacher = new Teacher("Tom", 21, classN);
             expect(teacher.name).to.equal("Tom");
             expect(teacher.age).to.equal(21);
-            expect(teacher.klass).to.equal(klass);
+            expect(teacher.classN).to.equal(classN);
         });
 
         describe("#introduce", () => {
             it("should overwrite Person introduce, introduce with name, age and class number, given teacher have class", () => {
-                const teacher = new Teacher("Tom", 21, klass);
+                const teacher = new Teacher("Tom", 21, classN);
                 const introduce = teacher.introduce();
                 expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Teacher. I teach Class 2.");
             });
@@ -75,11 +75,11 @@ describe("Person", () => {
             let studentJerry;
 
             before(() => {
-                studentJerry = new Student("Jerry", 8, klass);
+                studentJerry = new Student("Jerry", 8, classN);
             });
 
             it("should return I am teaching some guy, given my class is same with this guy's class", () => {
-                const teacher = new Teacher("Tom", 21, klass);
+                const teacher = new Teacher("Tom", 21, classN);
                 const introduce = teacher.introduceWith(studentJerry);
                 expect(introduce).to.equal("My name is Tom. I am 21 years old. I am a Teacher. I teach Jerry.");
             });
@@ -95,12 +95,12 @@ describe("Person", () => {
 
 describe("Class", () => {
     it("should have class number", () => {
-        const klass = new Class(2);
-        expect(klass.number).to.equal(2);
+        const classN = new Class(2);
+        expect(classN.number).to.equal(2);
     });
 
     it("should get display name with number", () => {
-        const klass = new Class(2);
-        expect(klass.getDisplayName()).to.equal("Class 2");
+        const classN = new Class(2);
+        expect(classN.getDisplayName()).to.equal("Class 2");
     });
 });
